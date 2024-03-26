@@ -1,0 +1,202 @@
+{% extends 'inc/base.html' %}
+
+{% block content %}
+
+
+
+
+<style>
+    /* Custom styles */
+    .cart-container {
+        
+         /* Adjust the top margin */
+        padding: 2rem;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-container h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .cart-item {
+        margin-bottom: 1rem;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cart-item img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-right: 1rem;
+    }
+
+    .item-details {
+        flex: 1;
+    }
+
+    .item-details h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .item-details p {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #666;
+    }
+
+    .delete-button {
+        padding: 0.5rem 1rem;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: auto; /* Move delete button to the right */
+        margin-bottom: 10px; /* Add space between items */
+        margin-right: 5%;
+    }
+
+    .delete-button:hover {
+        background-color: #da190b;
+    }
+
+    .cart-total {
+        margin-bottom: 1rem;
+        
+        
+        margin-right:300px;
+        margin-bottom: 10px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .proceed-to-checkout-button {
+        padding: 0.5rem 1rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .proceed-to-checkout-button:hover {
+        background-color: #45a049;
+    }
+
+    #dialog-content {
+        padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+        /* Styles for screens smaller than 768px (e.g., mobile devices) */
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px; /* Add padding around items */
+        }
+
+        .cart-item img {
+            margin-right: 0; /* Remove margin on mobile */
+            margin-bottom: 10px; /* Add space below image */
+            width: 100%;
+        }
+
+        .item-details {
+            width: 100%; /* Take full width on mobile */
+            text-align: left; /* Align text to the left */
+        }
+
+        .delete-button {
+            width: 100%; /* Take full width on mobile */
+            margin-left: 0; /* Remove margin on mobile */
+        }
+
+        .actions {
+            justify-content: center; /* Center the button on mobile */
+        }
+
+        .cart-container {
+            margin-top: 50px;
+             /* Adjust the top margin for mobile */
+        }
+
+        .cart-total {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 10px;
+        }
+
+
+        #dialog-content {
+        padding: 20px;
+    }
+
+
+        
+
+    }
+</style> 
+<br>
+<br>
+
+
+
+
+
+    
+        <div class="container mt-4 cart-container" >
+            <div id="success-alert" class="alert alert-success" role="alert" style="display: none;">
+                <h4>Order placed successfully!</h4>
+            </div>
+        <h1>Your Cart</h1>
+    {% for data in allcart %}
+    <form action="{% url 'delete' id=data.item.id %}" method="post">
+
+        {%csrf_token%}
+        <div class="cart-item">
+            <img src="{{ data.item.dish_pic.url }}" alt="Item Image">
+            <div class="item-details">
+                <h2>{{ data.item.dishname }}</h2>
+                <!--<p>{{ data.item.discription }}</p>-->
+                <p>₹{{ data.item.price }}</p>
+            </div>
+            <button class="delete-button">Delete</button>
+        </div><!-- Add more items here -->
+    </form>
+    {% endfor %}
+
+    <div class="cart-total">
+        <h3 >Cart Total: ₹{{ total }}</h3>
+    </div>
+    <div class="actions">
+        <a class="proceed-to-checkout-button" href="{% url 'orderform'%}" >Proceed To Checkout →</a>
+    </div>
+</div>
+
+    
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

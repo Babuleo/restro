@@ -1,0 +1,112 @@
+{%extends 'inc/base.html'%}
+
+
+{%block content%}
+
+<style>
+  .menu-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 767px) {
+  .menu-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color:rgb(98,98,98);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.add-to-cart {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-to-cart:hover {
+  background-color: #0056b3;
+}
+.dish-image-container {
+  height: 200px; /* Set the desired height */
+  overflow: hidden; /* Hide any extra image content */
+}
+
+.dish-image-container img {
+  width: 100%; /* Make the image responsive within the container */
+  height: auto; /* Preserve the image aspect ratio */
+}
+</style>
+
+
+<!-- Page Content -->
+<div class="container mt-4" >
+       
+  <br>
+  <br>
+  <h2 class="text-center text-white">Ready to Order </h2>
+  <p class="text-center text-white"><b>Discover our delicious menu items below:{{loggeduser}}</b></p>
+  
+  <!-- Card Component for Menu Items -->
+
+  
+  <div class="menu-container">
+
+
+    {% if success_message %}
+          <div class="alert alert-success" role="alert">
+            {{ success_message }}
+          </div>
+        {% endif %}
+
+
+        {% if error %}
+        <div class="alert alert-info" role="alert">
+          {{ error }}
+        </div>
+      {% endif %} 
+    {% for data in allmenu %}
+
+
+    
+    
+    <form action="{% url 'menuaddcart' p_id=data.id %}" method="post">
+      {% csrf_token %}
+      <div class="card h-100">
+        <div class="dish-image-container">
+          <img src="{{data.dish_pic.url}}" class="card-img-top" alt="{{data.dishname}}">
+        </div>
+        
+        <div class="card-body text-white">
+          <h5 class="card-title">{{data.dishname}}</h5>
+          <p class="card-text"><b>₹</b> {{data.price}}</p>
+          <p class="card-text"><b>Description:</b> <span class="description">{{data.discription}}</span></p>
+          
+        </div>
+        <div class="card-footer">
+          <button   class="btn btn-primary add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+
+
+ 
+
+
+{%endblock%}

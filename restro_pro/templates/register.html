@@ -1,0 +1,83 @@
+{% extends 'inc/base.html' %}
+
+{% block content %}
+<style>
+    .signup-container {
+        background: rgba(200, 200, 200, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+        width: calc(100% - 20px); /* Reduce width by 20px */
+        padding: 8px; /* Reduce padding */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px; /* Add margin bottom for spacing */
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[type="password"]:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .text-danger {
+        color: red;
+        font-size: 0.8em;
+    }
+
+    .alert {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container" style="padding-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 signup-container">
+            <h2 class="mb-4">Sign Up</h2>
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                {% if error %}
+                    <div class="alert alert-success" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

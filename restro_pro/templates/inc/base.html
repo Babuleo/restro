@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restro</title>
+
+  {%load static%}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- font awesome css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+
+  <style>
+    body {
+      
+      
+      background-image: url({% static 'img/back3.jpg' %});
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      
+      
+    }
+    .navbar {
+      
+      background-color: #333;
+    }
+    .navbar-brand, .navbar-nav .nav-link {
+      color: white;
+    }
+    .navbar-brand:hover, .navbar-nav .nav-link:hover {
+      color: #ffc107;
+    }
+    .footer {
+      
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      
+    }
+    .footer a {
+      color:white;
+    }
+    .footer a:hover {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Restro</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav" >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{%url 'home' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'menu' %}">Menu</a>
+         </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'mycart'%}">Cart</a>
+          </li>
+          
+          {%if request.user.is_authenticated%}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'myorder'%}">Myorder</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'logout' %}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fa fa-user-circle-o">{{user.username}}</i></a>
+          </li>
+          {%else%}
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'login' %}">Login</a>
+          </li>
+          {%endif%}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {%block content %}
+  {%endblock%}
+
+  <footer class="footer">
+    <div class="container">
+      <h1>About Us</h1>
+      <p>Welcome to Restro, your go-to place for delicious meals and a memorable dining experience. We take pride in serving quality food made with fresh ingredients and a touch of culinary expertise.</p>
+    
+    
+      <p>&copy; 2024 Restro</p>
+      <a href="#" id="viewLocation"  ><i class="fa fa-map-marker"></i> View Location</a>
+      <p>Contact: 0000000000</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("viewLocation").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+  
+        // Define the location coordinates
+        var latitude =11.6845205; // Example latitude (replace with your location's latitude)
+        var longitude =  77.9869159; // Example longitude (replace with your location's longitude)
+  
+        // Open the map in a new window or tab
+        window.open("https://www.google.com/maps?q=" + latitude + "," + longitude, "_blank");
+      });
+    });
+  </script>
+    
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- jquery -->
+</body>
+</html>

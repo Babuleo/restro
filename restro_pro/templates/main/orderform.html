@@ -1,0 +1,91 @@
+{% extends 'inc/base.html' %}
+
+{% block content %}
+
+
+
+<style>
+ .order {
+        background: rgba(200, 200, 200, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+</style>
+<br>
+<div class="container mt-5 order">
+    <div id="success-message" class="mt-3 alert alert-success" role="alert" style="display: none;">
+        Your order has been placed successfully!
+    </div>
+    <h1>Order Form</h1>
+    <form action="{% url 'orderform' %}" method="post"    class="needs-validation" novalidate >
+        {%csrf_token%}
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+            <div class="invalid-feedback">Please enter your name.</div>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
+            <div class="invalid-feedback">Please enter your phone number.</div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+            <div class="invalid-feedback">Please enter your address.</div>
+        </div>
+        <div class="form-group">
+            <label>Payment Method:</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="cash" required>
+                <label class="form-check-label" for="cashOnDelivery">Cash on Delivery</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="onlinePayment" value="online" required>
+                <label class="form-check-label" for="onlinePayment">Online Payment</label>
+            </div>
+            <div class="invalid-feedback">Please select a payment method.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </form>
+
+    <!-- Success message container -->
+   
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!--  
+
+
+    <form id="order-form" class="needs-validation" novalidate  action="{%url 'orderform' %}" method="post">
+
+-->
+<script>
+    $(document).ready(function() {
+        $("#order-form").submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            if ($(this)[0].checkValidity()) {
+                // Form is valid, send a POST request
+                $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                    // Handle the response, if needed
+                    alert('Your order has been placed successfully!');
+                });
+            }
+            $(this).addClass('was-validated'); // Add 'was-validated' class for Bootstrap validation styling
+        });
+    });
+</script>
+
+
+
+
+{% endblock %}

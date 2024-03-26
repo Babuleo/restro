@@ -1,0 +1,49 @@
+{% extends 'inc/base.html' %}
+
+{% block content %}
+
+
+
+<style>
+
+    
+    .login-container {
+      background: rgba(200, 200, 200, 0.8);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+  </style>
+
+  <div class="container"style="min-height: 500px;padding-top: 50px;">
+    <div class="row justify-content-center">
+      <div class="col-md-6 login-container">
+        <h2 class="mb-4">Login</h2>
+        {% if error_message %}
+          <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+          </div>
+        {% endif %}
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="email">Username</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="username">
+            
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+          </div>
+        
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {%endblock%}
